@@ -1,0 +1,77 @@
+### Variables
+@baseUrl = http://localhost:3000
+
+### 1. Get all movies
+GET {{baseUrl}}/movies
+
+### 2. Get movies filtered by year
+GET {{baseUrl}}/movies?year=2010
+
+### 3. Get movies filtered by director
+GET {{baseUrl}}/movies?director=Nolan
+
+### 4. Get movies with multiple filters
+GET {{baseUrl}}/movies?year=2010&director=Nolan
+
+### 5. Get a specific movie
+GET {{baseUrl}}/movies/1
+
+### 6. Get a non-existent movie
+GET {{baseUrl}}/movies/999
+
+### 7. Create a new movie (valid)
+POST {{baseUrl}}/movies
+Content-Type: application/json
+
+{
+  "title": "The Shawshank Redemption",
+  "director": "Frank Darabont",
+  "year": 1994
+}
+
+### 8. Create a new movie (invalid year)
+POST {{baseUrl}}/movies
+Content-Type: application/json
+
+{
+  "title": "Future Movie",
+  "director": "Someone",
+  "year": 2050
+}
+
+### 9. Create a new movie (missing fields)
+POST {{baseUrl}}/movies
+Content-Type: application/json
+
+{
+  "title": "Incomplete Movie"
+}
+
+### 10. Update a movie
+PUT {{baseUrl}}/movies/1
+Content-Type: application/json
+
+{
+  "title": "Inception (Updated)",
+  "director": "Christopher Nolan",
+  "year": 2010
+}
+
+### 11. Update a non-existent movie
+PUT {{baseUrl}}/movies/999
+Content-Type: application/json
+
+{
+  "title": "Non-existent Movie",
+  "director": "Nobody",
+  "year": 2000
+}
+
+### 12. Delete a movie
+DELETE {{baseUrl}}/movies/3
+
+### 13. Delete a non-existent movie
+DELETE {{baseUrl}}/movies/999
+
+### 14. Access undefined route
+GET {{baseUrl}}/unknown-route
