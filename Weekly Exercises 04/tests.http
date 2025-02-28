@@ -1,0 +1,92 @@
+### Variables
+@baseUrl = http://localhost:3000/api
+@token = 
+
+### 1. Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123",
+  "role": "admin"
+}
+
+### 2. Register a regular user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "password": "user123"
+}
+
+### 3. Login with admin credentials
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### 4. Login with regular user credentials
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "password": "user123"
+}
+
+### 5. Get all movies (public route)
+GET {{baseUrl}}/movies
+
+### 6. Get a specific movie by ID (public route)
+GET {{baseUrl}}/movies/60f7a6b9e6b2376c1f2e47a9
+
+### 7. Create a new movie (protected route - requires token)
+POST {{baseUrl}}/movies
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "The Shawshank Redemption",
+  "director": "Frank Darabont",
+  "year": 1994
+}
+
+### 8. Update a movie (protected route - requires token)
+PUT {{baseUrl}}/movies/60f7a6b9e6b2376c1f2e47a9
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Inception (Updated)",
+  "director": "Christopher Nolan",
+  "year": 2010
+}
+
+### 9. Delete a movie (protected route - requires token)
+DELETE {{baseUrl}}/movies/60f7a6b9e6b2376c1f2e47a9
+Authorization: Bearer {{token}}
+
+### 10. Try to create a movie without authentication
+POST {{baseUrl}}/movies
+Content-Type: application/json
+
+{
+  "title": "Unauthorized Movie",
+  "director": "Someone",
+  "year": 2020
+}
+
+### 11. Try to create a movie with invalid data
+POST {{baseUrl}}/movies
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Invalid Movie",
+  "year": 2050
+}
