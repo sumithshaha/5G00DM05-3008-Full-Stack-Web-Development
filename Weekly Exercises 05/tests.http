@@ -1,0 +1,118 @@
+### Variables
+@baseUrl = http://localhost:3000/api
+@httpsUrl = https://localhost:3443/api
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzFmOTQ4MmNiNTE2NzZiNDhhNTNkMyIsInVzZXJuYW1lIjoiYWRtaW42Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzQwNzY1NTI2LCJleHAiOjE3NDA3NjkxMjZ9.lPhJQHs8b8EmZvrwW1R7b-lpsDmkBZEuhWntdHjMj1Y
+@userToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzFmOTRmMmNiNTE2NzZiNDhhNTNkNiIsInVzZXJuYW1lIjoicmVndWxhcnVzZXI2Iiwicm9sZSI6InJlZ3VsYXIiLCJpYXQiOjE3NDA3NjU1MzQsImV4cCI6MTc0MDc2OTEzNH0.7_j2mRGMlGA_x-BWReAFCM70HwoDfUidxXOmRDRMUgM
+
+### 1. Register Admin User
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "admin6",
+  "password": "adminpassword",
+  "role": "admin"
+}
+
+### 2. Register Regular User
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "regularuser6",
+  "password": "userpassword",
+  "role": "regular"
+}
+
+### 3. Login as Admin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin6",
+  "password": "adminpassword"
+}
+
+### 4. Login as Regular User
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "regularuser6",
+  "password": "userpassword"
+}
+
+### 5. Get All Movies (Admin)
+GET {{baseUrl}}/movies
+Authorization: Bearer {{adminToken}}
+
+### 6. Get All Movies (Regular User)
+GET {{baseUrl}}/movies
+Authorization: Bearer {{userToken}}
+
+### 7. Get Movie by ID (Admin)
+GET {{baseUrl}}/movies/67c1f695766866e76f98a9e3
+Authorization: Bearer {{adminToken}}
+
+### 8. Get Movie by ID (Regular User)
+GET {{baseUrl}}/movies/67c1f695766866e76f98a9e3
+Authorization: Bearer {{userToken}}
+
+### 9. Add New Movie (Admin)
+POST {{baseUrl}}/movies
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "Inception",
+  "director": "Christopher Nolan",
+  "year": 2010
+}
+
+### 10. Try to Add Movie (Regular User - Should Fail)
+POST {{baseUrl}}/movies
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+  "title": "The Matrix",
+  "director": "The Wachowskis",
+  "year": 1999
+}
+
+### 11. Update Movie (Admin)
+PUT {{baseUrl}}/movies/67c1f695766866e76f98a9e3
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "Inception (Updated)",
+  "director": "Christopher Nolan",
+  "year": 2010
+}
+
+### 12. Try to Update Movie (Regular User - Should Fail)
+PUT {{baseUrl}}/movies/67c1f695766866e76f98a9e3
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+  "title": "Inception (Unauthorized Update)",
+  "director": "Christopher Nolan",
+  "year": 2010
+}
+
+### 13. Delete Movie (Admin)
+DELETE {{baseUrl}}/movies/67c1f695766866e76f98a9e3
+Authorization: Bearer {{adminToken}}
+
+### 14. Try to Delete Movie (Regular User - Should Fail)
+DELETE {{baseUrl}}/67c1f695766866e76f98a9e3
+Authorization: Bearer {{userToken}}
+
+### 15. Test HTTPS Endpoint
+GET {{httpsUrl}}/movies
+Authorization: Bearer {{adminToken}}
+
+### 16. Try Accessing Without Token
+GET {{baseUrl}}/movies
